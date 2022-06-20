@@ -1,11 +1,11 @@
-.display_part{
-    width: 50%;
-    margin: auto;
-    font-size: 2rem;
-    margin-top: 50px;
+.display_part {
+	width: 50%;
+	margin: auto;
+	font-size: 2rem;
+	margin-top: 30px;
 }
 
-#personne_choisi{
-    font-size: 2rem;
-    font-weight: bold; 
+#personne_choisi {
+	font-size: 2rem;
+	font-weight: bold;
 }
