@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- CSS only -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+			crossorigin="anonymous"
+		/>
+		<!-- JavaScript Bundle with Popper -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+			crossorigin="anonymous"
+		></script>
+		<!--Jquery_CDN-->
+		<script
+			src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			crossorigin="anonymous"
+		></script>
+		<!--css-->
+		<link rel="stylesheet" href="style.css" />
+		<!--js-->
+		<script defer src="participants.js"></script>
+		<script defer src="generer_grp.js"></script>
+		<title>Choix_random</title>
+	</head>
+	<body class="container text-center my-4">
+		<header>
+			<h1>La randomerie</h1>
+		</header>
+		<main class="my-5">
+			<div class="form-floating mb-3">
+				<input
+					type="text"
+					class="form-control"
+					id="inp_participant"
+					placeholder="bob par exemple..."
+				/>
+				<label for="floatingInput">Participants</label>
+			</div>
+			<div>
+				<button type="button" id="add_participant" class="btn btn-primary m-2">
+					Ajouter participant
+				</button>
+			</div>
+			<button
+				class="btn btn-dark"
+				type="button"
+				data-bs-toggle="offcanvas"
+				data-bs-target="#offcanvasExample"
+				aria-controls="offcanvasExample"
+			>
+				Groupes de combien ?
+			</button>
+
+			<div
+				class="offcanvas offcanvas-start"
+				tabindex="-1"
+				id="offcanvasExample"
+				aria-labelledby="offcanvasExampleLabel"
+			>
+				<div class="offcanvas-header">
+					<h5 class="offcanvas-title" id="offcanvasExampleLabel">
+						La randomerie n'est jamais finie !
+					</h5>
+					<button
+						type="button"
+						id="groupe_de_combien"
+						class="btn-close"
+						data-bs-dismiss="offcanvas"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="offcanvas-body">
+					<div>De combien de personnes seront constitués les groupes?</div>
+					<div class="form-floating mb-3 my-4">
+						<input
+							type="text"
+							class="form-control"
+							id="groupOf_ppl"
+							placeholder="bob par exemple..."
+						/>
+						<label for="floatingInput">Groupe</label>
+					</div>
+				</div>
+			</div>
+
+			<button type="button" id="generate_grp" class="btn btn-warning m-2">
+				Générer les groupes
+			</button>
+
+			<button type="button" id="Afficher_les_groupes" class="btn btn-success m-2">
+				Afficher les groupes
+			</button>
+
+			<button
+				id="effacer_part"
+				type="button"
+				id="display_ppl"
+				class="btn btn-danger m-2"
+			>
+				Effacer les participants
+			</button>
+			<div>
+				<button type="button" id="choisir_une_personne" class="btn btn-primary m-2">
+					Choisir une personne
+				</button>
+			</div>
+			<br><br><br>
+			<div id="personne_choisi"></div>
+			<br><br>
+			<div id="nombre_participant"></div>
+			<div class="display_part"></div>
+			
+			<!--modal-->
+			<div
+				id="modal"
+				class="modal fade"
+				id="exampleModalCenter"
+				tabindex="-1"
+				role="dialog"
+				aria-labelledby="exampleModalCenterTitle"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">
+								Attention !
+							</h5>
+							<button
+								type="button"
+								id="close_cross"
+								class="close"
+								data-dismiss="modal"
+								aria-label="Close"
+							>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">Vous allez écraser les participants ?</div>
+						<div class="modal-footer">
+							<button id="remove_modal" type="button" class="btn btn-primary">
+								Oui
+							</button>
+							<button
+								id="close_modal"
+								type="button"
+								class="btn btn-secondary"
+								data-dismiss="modal"
+							>
+								Non
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
