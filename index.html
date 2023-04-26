@@ -32,7 +32,7 @@
 	</head>
 	<body class="container text-center my-4">
 		<header>
-			<h1> 🏝️ Randomizer 🏝️</h1>
+			<h1>🏝️ Randomizer 🏝️</h1>
 		</header>
 		<main class="my-5">
 			<div class="form-floating mb-3">
@@ -49,75 +49,38 @@
 					Ajouter participant
 				</button>
 			</div>
-			<button
-				class="btn btn-dark"
-				type="button"
-				data-bs-toggle="offcanvas"
-				data-bs-target="#offcanvasExample"
-				aria-controls="offcanvasExample"
-			>
-				Groupes de combien ?
-			</button>
+			<form class="d-flex justify-content-center m-auto">
+				<button class="btn btn-warning mx-2" type="button" id="nbr-par-groupes">
+					Nbre par groupes
+				</button>
+				<input
+					type="number"
+					class="form-control w-25 mx-2"
+					id="input-nombre-par-groupes"
+					aria-describedby="emailHelp"
+				/>
+			</form>
 
-			<div
-				class="offcanvas offcanvas-start"
-				tabindex="-1"
-				id="offcanvasExample"
-				aria-labelledby="offcanvasExampleLabel"
-			>
-				<div class="offcanvas-header">
-					<h5 class="offcanvas-title" id="offcanvasExampleLabel">
-						Complétement aléatoire
-					</h5>
-					<button
-						type="button"
-						id="groupe_de_combien"
-						class="btn-close"
-						data-bs-dismiss="offcanvas"
-						aria-label="Close"
-					></button>
-				</div>
-				<div class="offcanvas-body">
-					<div>De combien de personnes seront constitués les groupes?</div>
-					<div class="form-floating mb-3 my-4">
-						<input
-							type="text"
-							class="form-control"
-							id="groupOf_ppl"
-							placeholder="bob par exemple..."
-						/>
-						<label for="floatingInput">Groupe</label>
-					</div>
-				</div>
-			</div>
-
-			<button type="button" id="generate_grp" class="btn btn-warning m-2">
-				Générer les groupes
-			</button>
-
-			<button type="button" id="Afficher_les_groupes" class="btn btn-success m-2">
-				Afficher les groupes
-			</button>
-
-			<button
-				id="effacer_part"
-				type="button"
-				id="display_ppl"
-				class="btn btn-danger m-2"
-			>
-				Effacer les participants
-			</button>
-			<div>
-				<button type="button" id="bouton-choisir" class="btn btn-primary m-2">
-					Choix aléatoire
+			<div id="creer-groupes">
+				<button type="button" id="bouton-choisir" class="btn btn-success m-2">
+					Choisir une personne
+				</button>
+				<button
+					id="effacer_part"
+					type="button"
+					id="display_ppl"
+					class="btn btn-danger m-2"
+				>
+					Effacer les participants
 				</button>
 			</div>
-			<br><br><br>
+			<br /><br /><br />
 			<div id="personne-choisi"></div>
-			<br><br>
-			<div id="nombre-participant"></div><br>
+			<br /><br />
+			<div id="nombre-participant"></div>
+			<br />
 			<div id="afficher-participant"></div>
-			
+
 			<!--modal-->
 			<div
 				id="modal"

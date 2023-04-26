@@ -6,6 +6,9 @@ let boutonEffacerParticipant = $( "#effacer_part" );
 let boutonChoisirPersonne = $( "#bouton-choisir" );
 let divAffichageParticipant = $( '#afficher-participant' );
 let divAffichageNombreParticipant = $( '#nombre-participant' );
+let boutonNombreParGroupe = $( "#nbr-par-groupes" );
+let inputNombreParGroupe=$( "#input-nombre-par-groupes" );
+let groupes = [];
 
 //var utilisé ici pour que le tableau puisse varier
 var tab_participant ;
@@ -149,4 +152,47 @@ boutonChoisirPersonne.click( function () {
         
     }
     console.log(tab_participant)
+} )
+
+//Générer les groupes
+
+
+//on creer un sous tableau et on envoi le nombre de participant décidé par l'utilisateur dans celui-ci
+function creerSousTableauDeParticipant(nombre) {
+    let newTab = [];
+    for (let i = 0; i < nombre; i++) {
+        let maxLimit = tab_participant.length;
+        //générer chiffre aléatoire
+        let nombre_random = Math.floor( Math.random() * maxLimit );
+        
+            if (!newTab.includes(tab_participant[ nombre_random ])) {
+                newTab.push( tab_participant[ nombre_random ] );
+                tab_participant.splice( nombre_random, 1);
+            } else {
+                newTab.push( tab_participant[ i ] );
+                tab_participant.splice(i,1)
+            }
+            
+    } 
+    console.log( tab_participant );
+    return newTab;
+}
+
+
+//on envoit les tableaux créé dans un autre tableau qu'on onverra dans le localStorage
+function tableauDeGroupe () {
+    let groupTab = [];
+    for ( let i = 0; i < ( tab_participant.length ) / inputNombreParGroupe.val(); i++ ) {
+        let tableau = creerSousTableauDeParticipant( inputNombreParGroupe.val() );
+        
+        groupTab.push( tableau );
+        
+    }
+    console.log( groupTab);
+}
+
+
+//declencher la creation de grp au click
+boutonNombreParGroupe.click(function () {
+    tableauDeGroupe();
 })
