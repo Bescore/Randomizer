@@ -151,7 +151,6 @@ boutonChoisirPersonne.click( function () {
         afficherPaticipants();
         
     }
-    console.log(tab_participant)
 } )
 
 //Générer les groupes
@@ -167,28 +166,45 @@ function creerSousTableauDeParticipant(nombre) {
         
             if (!newTab.includes(tab_participant[ nombre_random ])) {
                 newTab.push( tab_participant[ nombre_random ] );
-                tab_participant.splice( nombre_random, 1);
+                
             } else {
                 newTab.push( tab_participant[ i ] );
-                tab_participant.splice(i,1)
+                
             }
             
     } 
-    console.log( tab_participant );
     return newTab;
 }
 
+//verifier qu'un nom est présent dans le tableau
+function isExist ( tableauDeGroupe, tableauTemporaire ) {
+    for ( const elem of tableauDeGroupe ) {
+        if (!tableauTemporaire.includes(elem)) {
+            tableauTemporaire.push( elem );
+        }
+        else {
+            return false;
+        } 
+    }
+    return true;
+}
 
 //on envoit les tableaux créé dans un autre tableau qu'on onverra dans le localStorage
 function tableauDeGroupe () {
     let groupTab = [];
+    let tempTab = [];
     for ( let i = 0; i < ( tab_participant.length ) / inputNombreParGroupe.val(); i++ ) {
         let tableau = creerSousTableauDeParticipant( inputNombreParGroupe.val() );
         
-        groupTab.push( tableau );
-        
+        if (isExist(tableau,tempTab)) {
+            groupTab.push( tableau );
+        }
     }
-    console.log( groupTab);
+    console.log( groupTab );
+    //si la taille du tableau de groupe est inférieur à la taille totale du tableau de participants divisé par le nombre par groupe on relance la fonction
+    if ( (groupTab.length < tab_participant.length / inputNombreParGroupe.val() ) ) {
+        tableauDeGroupe ()
+    }
 }
 
 
