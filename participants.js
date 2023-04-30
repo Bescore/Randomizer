@@ -10,6 +10,7 @@ let boutonNombreParGroupe = $( "#nbr-par-groupes" );
 let inputNombreParGroupe = $( "#input-nombre-par-groupes" );
 let afficherGroupesDiv = $( "#afficher-groupes" );
 let rewind = $( "#rewind" );
+let boutonChangeTheme =$("#change-theme");
 
 
 
@@ -109,7 +110,7 @@ function afficherPaticipants () {
     divAffichageParticipant.html( `` );
     //puis on boucle et on ajoute chaque paticipant
     $( tab_participant ).each( function ( index, value ) {
-        divAffichageParticipant.append( ` 🤷‍♂️ ${ value }   ` );
+        divAffichageParticipant.append( ` 🏝️ ${ value }   ` );
     } )
 }
 afficherPaticipants();
@@ -245,11 +246,19 @@ function nouveauGroupes ( array ) {
     let i = 1;
     afficherGroupesDiv.html( '' );
     for ( const element of array ) {
-        afficherGroupesDiv.append(`<li class="fs-4" ><span>Groupe ${i} :  </span><strong>${element}</strong></li>`)
-        afficherGroupesDiv.append( "<hr>" );
+        afficherGroupesDiv.append(`<li class="fs-4 list-group-item" ><span>Groupe ${i}  : </span><strong>${element}</strong></li>`)
         i++
     }
 }
+
+//afficher les groupes au démarrage si ils existent
+function afficherGroupauLaod () {
+    let groupTabParsed=JSON.parse(localStorage.getItem( "groupes" ))
+    if (groupTabParsed!=null && (groupTabParsed.length>0)) {
+        nouveauGroupes( groupTabParsed );
+    } 
+}
+afficherGroupauLaod(); 
 
 //reset l'array de participant
 function resetArrayDeParticipants() {
@@ -268,3 +277,11 @@ function resetArrayDeParticipants() {
     })
 }
 resetArrayDeParticipants();
+
+//function de changement de theme
+function changeTheme() {
+    boutonChangeTheme.click(function () {
+        $("body").toggleClass("dark-theme")
+    })
+}
+changeTheme();

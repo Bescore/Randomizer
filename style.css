@@ -19,3 +19,8 @@ transition: 400ms ease-in;
 transform: scale(1.7);
 cursor: pointer;
 }
+
+.dark-theme{
+	background-color: rgb(19, 15, 15);
+	color: rgb(143, 161, 147);
+}
