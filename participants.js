@@ -7,11 +7,15 @@ let boutonChoisirPersonne = $( "#bouton-choisir" );
 let divAffichageParticipant = $( '#afficher-participant' );
 let divAffichageNombreParticipant = $( '#nombre-participant' );
 let boutonNombreParGroupe = $( "#nbr-par-groupes" );
-let inputNombreParGroupe=$( "#input-nombre-par-groupes" );
-let groupes = [];
+let inputNombreParGroupe = $( "#input-nombre-par-groupes" );
+let afficherGroupesDiv = $( "#afficher-groupes" );
+let rewind = $( "#rewind" );
+
+
 
 //var utilisé ici pour que le tableau puisse varier
-var tab_participant ;
+var tab_participant;
+let oldParticipant = [];
 //Fonctions charger et récupérer le localeStrorage si il existe sinon le créer
 function recupérerLocalStorage () {
     
@@ -28,19 +32,27 @@ function recupérerLocalStorage () {
 //Fonction verifier que le champs n'est pas vide
 function verifierChamps() {
     if ( inputParticipants.val() == "" ) {
-        alert( 'Ajoutez des noms' )
+        alert( 'Ajoutez des noms' );
         return false;
     }
     return true;
 }
 
+//verifier que le participant ajouté n'est pas déjà présent dans la liste
+function verifierPresenceParticipant(array,value) {
+        return  array.includes(value);
+}
+
+
 //Fonction qui push le participant et le stock
 function pushParticipant () {
     //verifier d'abord que l'entrée utilisateur (peut être améliorer avec un regex ou autre)
-    if (verifierChamps()) {
+    if (verifierChamps() && !verifierPresenceParticipant(tab_participant,inputParticipants.val() )) {
         tab_participant.push( inputParticipants.val() );
         localStorage.setItem( "participants", JSON.stringify( tab_participant ) );
-        }
+    } else {
+        alert("Cet élement est déjà enregistré")
+    }
         //actualiser affichage participant
         afficherPaticipants();
         //actualiser affichage nombre participant
@@ -63,12 +75,14 @@ ajouterParticipant();
 function keyPressEnter () {
     inputParticipants.keypress(function ( event ) {
         if ( event.key === "Enter" ) {
-            if (verifierChamps()) {
+            if (verifierChamps() && !verifierPresenceParticipant(tab_participant,inputParticipants.val())) {
                 tab_participant.push( inputParticipants.val() );
                 localStorage.setItem( "participants", JSON.stringify( tab_participant ) );
                 //on clear le champs
                 inputParticipants.val( "" );
-                }
+            }else {
+                alert("Cet élement est déjà enregistré")
+            }
             //actualiser affichage participant
             afficherPaticipants();
             //actualiser affichage nombre participant
@@ -95,14 +109,14 @@ function afficherPaticipants () {
     divAffichageParticipant.html( `` );
     //puis on boucle et on ajoute chaque paticipant
     $( tab_participant ).each( function ( index, value ) {
-        divAffichageParticipant.append( ` - ${ value }   ` );
+        divAffichageParticipant.append( ` 🤷‍♂️ ${ value }   ` );
     } )
 }
 afficherPaticipants();
 
 //Fonction afficher le nombre de participants
 function afficherNombreParticipant() {
-    divAffichageNombreParticipant.html( "Nombre de participants : " + tab_participant.length +"")
+    divAffichageNombreParticipant.html( "<strong>Nombre de participants : <strong>" + tab_participant.length +"")
 }
 afficherNombreParticipant();
 
@@ -112,8 +126,11 @@ function effacerParticipants() {
         //afficher le nombre de participants
         $( "#nombre-participant" ).html( "Nombre de participants : aucun" );
         localStorage.removeItem( "participants" );
+        localStorage.removeItem( "a_ete_choisi" );
+        localStorage.removeItem( "groupes" );
         recupérerLocalStorage();
         divAffichageParticipant.html( `` );
+        afficherGroupesDiv.html( '' );
         $( '#modal' ).modal( 'hide' );
     } )
 }
@@ -139,12 +156,14 @@ $( "#effacer_part" ).click( function () {
 boutonChoisirPersonne.click( function () {
     let maxLimit = tab_participant.length
     let nombre_random = Math.floor( Math.random() * maxLimit );
-    if ( maxLimit > 1 ) {
-        $( "#personne-choisi" ).html("🥳 "+ tab_participant[ nombre_random ]+" 🥳" )
-        tab_participant.splice( nombre_random, 1 );
+    if ( maxLimit > 0) {
         
+        $( "#personne-choisi" ).html( "🥳 " + tab_participant[ nombre_random ] + " 🥳" );
+        oldParticipant.push( tab_participant[ nombre_random ] );
+        tab_participant.splice( nombre_random, 1 );
         //renvoyer le tableau dans le localStorage
         localStorage.setItem( "participants", JSON.stringify( tab_participant ) );
+        localStorage.setItem( "a_ete_choisi", JSON.stringify( oldParticipant ) );
         //actualiser l'affichage du nombre de participant
         afficherNombreParticipant();
         //actualiser affichage participant
@@ -190,7 +209,7 @@ function isExist ( tableauDeGroupe, tableauTemporaire ) {
 }
 
 //on envoit les tableaux créé dans un autre tableau qu'on onverra dans le localStorage
-function tableauDeGroupe () {
+function tableauDeGroupes () {
     let groupTab = [];
     let tempTab = [];
     for ( let i = 0; i < ( tab_participant.length ) / inputNombreParGroupe.val(); i++ ) {
@@ -203,12 +222,49 @@ function tableauDeGroupe () {
     console.log( groupTab );
     //si la taille du tableau de groupe est inférieur à la taille totale du tableau de participants divisé par le nombre par groupe on relance la fonction
     if ( (groupTab.length < tab_participant.length / inputNombreParGroupe.val() ) ) {
-        tableauDeGroupe ()
+        tableauDeGroupes ()
+    } else {
+        nouveauGroupes( groupTab );
+        localStorage.setItem( "groupes", JSON.stringify(groupTab) );
     }
 }
 
 
 //declencher la creation de grp au click
-boutonNombreParGroupe.click(function () {
-    tableauDeGroupe();
-})
+boutonNombreParGroupe.click( function () {
+    if ( tab_participant.length % inputNombreParGroupe.val() == 0 && tab_participant.length!=inputNombreParGroupe.val()) {
+        tableauDeGroupes();
+    } else {
+        alert( "Vous ne pouvez pas effectuer cette action vérifiez le nombre de participants" );
+    }
+    
+} )
+
+//afficher les groupes
+function nouveauGroupes ( array ) {
+    let i = 1;
+    afficherGroupesDiv.html( '' );
+    for ( const element of array ) {
+        afficherGroupesDiv.append(`<li class="fs-4" ><span>Groupe ${i} :  </span><strong>${element}</strong></li>`)
+        afficherGroupesDiv.append( "<hr>" );
+        i++
+    }
+}
+
+//reset l'array de participant
+function resetArrayDeParticipants() {
+    rewind.click(function () {
+        tab_participant = oldParticipant.concat( tab_participant );
+        oldParticipant = [];
+        console.log(tab_participant)
+        localStorage.setItem( "participants", JSON.stringify( tab_participant ) );
+        localStorage.removeItem( "a_ete_choisi" );
+        //vider le contenu html de la div 'personne choisi'
+        $( "#personne-choisi" ).html( '' );
+        //actualiser l'affichage du nombre de participant
+        afficherNombreParticipant();
+        //actualiser affichage participant
+        afficherPaticipants();
+    })
+}
+resetArrayDeParticipants();

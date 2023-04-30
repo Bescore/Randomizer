@@ -4,6 +4,8 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!--font_awsome-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<!-- CSS only -->
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
@@ -26,8 +28,7 @@
 		<!--css-->
 		<link rel="stylesheet" href="style.css" />
 		<!--js-->
-		<script defer type="module" src="participants.js"></script>
-		<script defer type="module" src="generer_grp.js"></script>
+		<script defer  src="participants.js"></script>
 		<title>Randomizer</title>
 	</head>
 	<body class="container text-center my-4">
@@ -44,11 +45,6 @@
 				/>
 				<label for="floatingInput">Participants</label>
 			</div>
-			<div>
-				<button type="button" id="add_participant" class="btn btn-primary m-2">
-					Ajouter participant
-				</button>
-			</div>
 			<form class="d-flex justify-content-center m-auto">
 				<button class="btn btn-warning mx-2" type="button" id="nbr-par-groupes">
 					Nbre par groupes
@@ -60,8 +56,10 @@
 					aria-describedby="emailHelp"
 				/>
 			</form>
-
 			<div id="creer-groupes">
+				<button type="button" id="add_participant" class="btn btn-primary m-2">
+					Ajouter participant
+				</button>
 				<button type="button" id="bouton-choisir" class="btn btn-success m-2">
 					Choisir une personne
 				</button>
@@ -76,10 +74,14 @@
 			</div>
 			<br /><br /><br />
 			<div id="personne-choisi"></div>
-			<br /><br />
+			<br >
 			<div id="nombre-participant"></div>
-			<br />
+			<br >
+			<i id="rewind" class="fa-solid fa-arrow-rotate-left"></i>
 			<div id="afficher-participant"></div>
+			<br>
+			<ul id="afficher-groupes"></ul>
+
 
 			<!--modal-->
 			<div
@@ -107,7 +109,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">Vous allez écraser les participants ?</div>
+						<div class="modal-body">Vous allez effacer les participants ?</div>
 						<div class="modal-footer">
 							<button id="remove_modal" type="button" class="btn btn-primary">
 								Oui

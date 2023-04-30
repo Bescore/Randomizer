@@ -1,11 +1,21 @@
 #afficher-participant {
 	width: 50%;
 	margin: auto;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	margin-top: 30px;
 }
 
 #personne-choisi {
-	font-size: 2rem;
+	font-size: 1.5rem;
 	font-weight: bold;
+}
+
+ul{
+	list-style: none;
+}
+
+#rewind:hover{
+transition: 400ms ease-in;
+transform: scale(1.7);
+cursor: pointer;
 }
