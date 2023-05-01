@@ -160,6 +160,9 @@ boutonChoisirPersonne.click( function () {
     let nombre_random = Math.floor( Math.random() * maxLimit );
     if ( maxLimit > 0 ) {
         $( "#personne-choisi" ).html( "<img style=width:10%;height:10%;' src='homer.gif'>" + tab_participant[ nombre_random ] + " <img style=width:10%;height:10%;' src='homer.gif'>" );
+        if (localStorage.getItem("a_ete_choisi")) {
+            oldParticipant = JSON.parse( localStorage.getItem( "a_ete_choisi" ) );
+        }
         oldParticipant.push( tab_participant[ nombre_random ] );
         tab_participant.splice( nombre_random, 1 );
         //renvoyer le tableau dans le localStorage
@@ -169,7 +172,6 @@ boutonChoisirPersonne.click( function () {
         afficherNombreParticipant();
         //actualiser affichage participant
         afficherPaticipants();
-
     }
 } )
 
@@ -183,15 +185,11 @@ function creerSousTableauDeParticipant ( nombre ) {
         let maxLimit = tab_participant.length;
         //générer chiffre aléatoire
         let nombre_random = Math.floor( Math.random() * maxLimit );
-
         if ( !newTab.includes( tab_participant[ nombre_random ] ) ) {
             newTab.push( tab_participant[ nombre_random ] );
-
         } else {
             newTab.push( tab_participant[ i ] );
-
         }
-
     }
     return newTab;
 }
@@ -201,12 +199,12 @@ function isExist ( tableauDeGroupe, tableauTemporaire ) {
     for ( const elem of tableauDeGroupe ) {
         if ( !tableauTemporaire.includes( elem ) ) {
             tableauTemporaire.push( elem );
-            return true;
         }
         else {
             return false;
         }
     }
+    return true;
 }
 
 //on envoit les tableaux créé dans un autre tableau qu'on onverra dans le localStorage
@@ -215,7 +213,6 @@ function tableauDeGroupes () {
     let tempTab = [];
     for ( let i = 0; i < ( tab_participant.length ) / inputNombreParGroupe.val(); i++ ) {
         let tableau = creerSousTableauDeParticipant( inputNombreParGroupe.val() );
-
         if ( isExist( tableau, tempTab ) ) {
             groupTab.push( tableau );
         }
@@ -227,7 +224,7 @@ function tableauDeGroupes () {
         nouveauGroupes( groupTab );
         localStorage.setItem( "groupes", JSON.stringify( groupTab ) );
     }
-}
+};
 
 
 //declencher la creation de grp au click
@@ -262,16 +259,20 @@ afficherGroupauLaod();
 //reset l'array de participant
 function resetArrayDeParticipants () {
     rewind.click( function () {
-        tab_participant = oldParticipant.concat( tab_participant );
-        oldParticipant = [];
-        localStorage.setItem( "participants", JSON.stringify( tab_participant ) );
-        localStorage.removeItem( "a_ete_choisi" );
-        //vider le contenu html de la div 'personne choisi'
-        $( "#personne-choisi" ).html( '' );
-        //actualiser l'affichage du nombre de participant
-        afficherNombreParticipant();
-        //actualiser affichage participant
-        afficherPaticipants();
+        if ( JSON.parse(localStorage.getItem( "a_ete_choisi" ))) {
+            oldParticipant = JSON.parse(localStorage.getItem( "a_ete_choisi" ));
+            tab_participant = JSON.parse(localStorage.getItem( "participants" ));
+            tab_participant = oldParticipant.concat( tab_participant );
+            oldParticipant = [];
+            localStorage.setItem( "participants", JSON.stringify( tab_participant ) );
+            localStorage.removeItem( "a_ete_choisi" );
+            //vider le contenu html de la div 'personne choisi'
+            $( "#personne-choisi" ).html( '' );
+            //actualiser l'affichage du nombre de participant
+            afficherNombreParticipant();
+            //actualiser affichage participant
+            afficherPaticipants();
+        }
     } )
 }
 resetArrayDeParticipants();
