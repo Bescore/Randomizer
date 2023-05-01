@@ -220,7 +220,6 @@ function tableauDeGroupes () {
             groupTab.push( tableau );
         }
     }
-    console.log( groupTab );
     //si la taille du tableau de groupe est inférieur à la taille totale du tableau de participants divisé par le nombre par groupe on relance la fonction
     if ( ( groupTab.length < tab_participant.length / inputNombreParGroupe.val() ) ) {
         tableauDeGroupes()
@@ -265,7 +264,6 @@ function resetArrayDeParticipants () {
     rewind.click( function () {
         tab_participant = oldParticipant.concat( tab_participant );
         oldParticipant = [];
-        console.log( tab_participant )
         localStorage.setItem( "participants", JSON.stringify( tab_participant ) );
         localStorage.removeItem( "a_ete_choisi" );
         //vider le contenu html de la div 'personne choisi'
@@ -283,7 +281,7 @@ function changeTheme () {
     boutonChangeTheme.click( function () {
         if ( localStorage.getItem( "theme" ) ) {
             $( "body" ).removeClass( "dark-theme" );
-            localStorage.removeItem( "theme");
+            localStorage.removeItem( "theme" );
         } else {
             $( "body" ).addClass( "dark-theme" );
             //envoyer la class dans le localStorage
