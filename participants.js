@@ -11,6 +11,7 @@ let inputNombreParGroupe = $( "#input-nombre-par-groupes" );
 let afficherGroupesDiv = $( "#afficher-groupes" );
 let rewind = $( "#rewind" );
 let boutonChangeTheme = $( "#change-theme" );
+let afficherHomer = $( "#homer" );
 
 
 
@@ -117,7 +118,7 @@ afficherPaticipants();
 
 //Fonction afficher le nombre de participants
 function afficherNombreParticipant () {
-    divAffichageNombreParticipant.html( "<strong>Nombre de participants : <strong>" + tab_participant.length + "" )
+    divAffichageNombreParticipant.html( "<strong>Nombre de participants : <strong>" + tab_participant.length + "" );
 }
 afficherNombreParticipant();
 
@@ -160,6 +161,7 @@ boutonChoisirPersonne.click( function () {
     if ( maxLimit > 0 ) {
 
         $( "#personne-choisi" ).html( "🥳 " + tab_participant[ nombre_random ] + " 🥳" );
+        afficherHomer.html( "<img src='homer.gif'>" );
         oldParticipant.push( tab_participant[ nombre_random ] );
         tab_participant.splice( nombre_random, 1 );
         //renvoyer le tableau dans le localStorage
