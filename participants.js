@@ -159,8 +159,7 @@ boutonChoisirPersonne.click( function () {
     let maxLimit = tab_participant.length
     let nombre_random = Math.floor( Math.random() * maxLimit );
     if ( maxLimit > 0 ) {
-
-        $( "#personne-choisi" ).html( "<img style=width:8%;height:8%;' src='homer.gif'>" + tab_participant[ nombre_random ] + " <img style=width:8%;height:8%;' src='homer.gif'>" );
+        $( "#personne-choisi" ).html( "<img style=width:6%;height:6%;' src='homer.gif'>" + tab_participant[ nombre_random ] + " <img style=width:6%;height:6%;' src='homer.gif'>" );
         oldParticipant.push( tab_participant[ nombre_random ] );
         tab_participant.splice( nombre_random, 1 );
         //renvoyer le tableau dans le localStorage
