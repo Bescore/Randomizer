@@ -201,12 +201,12 @@ function isExist ( tableauDeGroupe, tableauTemporaire ) {
     for ( const elem of tableauDeGroupe ) {
         if ( !tableauTemporaire.includes( elem ) ) {
             tableauTemporaire.push( elem );
+            return true;
         }
         else {
             return false;
         }
     }
-    return true;
 }
 
 //on envoit les tableaux créé dans un autre tableau qu'on onverra dans le localStorage
@@ -222,7 +222,7 @@ function tableauDeGroupes () {
     }
     //si la taille du tableau de groupe est inférieur à la taille totale du tableau de participants divisé par le nombre par groupe on relance la fonction
     if ( ( groupTab.length < tab_participant.length / inputNombreParGroupe.val() ) ) {
-        tableauDeGroupes()
+        tableauDeGroupes();
     } else {
         nouveauGroupes( groupTab );
         localStorage.setItem( "groupes", JSON.stringify( groupTab ) );
