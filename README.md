@@ -1,7 +1,14 @@
 # Randomizer
 
-Petit projet qui me permet de trvailler javascript et les arrays, ajoutez des noms, piochez quelqu'un au hasard. Créez des groupes selon le nombre de personnes.
+Petit projet qui me permet de travailler javascript et les arrays. Ajoutez des noms, piochez quelqu'un au hasard. Créez des groupes selon le nombre de personnes.
 
--Et tout ça aléatoirement c'est pas beau ça ? 
+-Ajoutez des noms
+
+-Choisissez quelqu'un au hasard
+
+-Créez des groupes selon le nombre de personnes
+
+-Créez des groupes aléatoirement
+
 
 https://bescore.github.io/Randomizer/
